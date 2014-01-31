@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Basic Single Video Example</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script type="text/javascript">
+            // works with no conflict
+            jQuery.noConflict();
+        </script>
+        <script src="../jquery.jqyt.js"></script>
+        <script type="text/javascript">
+            
+            (function ($) {
+                
+                $(document).ready(function () {
+                    
+                   /* 
+                    *  note: in this example, all elements that are members of
+                    *  the 'yti-video' class will show the same video due to
+                    *  parameters that are set.
+                    */
+                   
+                   // create a video on all elements with matching selector.
+                    $('.yt-video').YTiFrame({
+                        video_id: 'Erd2k6EKxCQ', // video to play
+                        player_vars: { autoplay: 1 } // autoplay video
+                    });
+                });
+            }(jQuery));
+        </script>
+        <style type="text/css">
+            
+            /*
+             *  note: the video will take on the width and height of the div it 
+             *  is assigned to.
+             */
+            .yt-video {
+                width:600px;
+                height:370px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="yt-video"></div>
+    </body>
+</html>
