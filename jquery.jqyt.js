@@ -179,7 +179,7 @@
             wmode: 'opaque', 
             autoplay: 0, 
             controls: 1 
-		},
+        },
         progress_interval: 100,
         info_request: false,
         events: {
