@@ -1,8 +1,8 @@
 /* jquery.jqyt - v1.0 - 2014-01-31
- * https://code-communion.com
- * Copyright (c) 2013 Joshua Jones; Licensed MIT 
+ * https://github.com/joshua-jones-software/jqyt
+ * Copyright (c) 2014 Joshua Jones; Licensed MIT 
  */
-(function($) {
+;(function($) {
     $.fn.YTiFrame = function(options) {
         var opts        = null,
             player_ctr  = 0;
