@@ -76,7 +76,7 @@
             self.on('onPlayerStateChange', o.events.onPlayerStateChange);
             self.on('onPlayerProgress', o.events.onPlayerProgress);
             self.on('onPlayerCreated', o.events.onPlayerCreated);
-			self.on('onPlayerReady', o.events.onPlayerReady);
+            self.on('onPlayerReady', o.events.onPlayerReady);
 
             self.data('yti-player-id', obj.attr('id'));
 
@@ -157,7 +157,7 @@
                         player.video = data.data;
                         this.data('yti-player', player);
                         this.find('iframe').css('visibility', 'visible');
-						self.trigger('onPlayerCreated', [player]);
+                        self.trigger('onPlayerCreated', [player]);
                     }
                 });
             }
