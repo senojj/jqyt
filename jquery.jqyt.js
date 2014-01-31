@@ -16,15 +16,15 @@
                     self.data('yti-player', null);
                     $('#' + self.data('yti-player-id')).remove();
                     self.data('yti-player-id', null);
-					self.off('onPlayerEnd');
-					self.off('onPlayerPlaying');
-					self.off('onPlayerPaused');
-					self.off('onPlayerBuffering');
-					self.off('onPlayerCued');
-					self.off('onPlayerStateChange');
-					self.off('onPlayerProgress');
-					self.off('onPlayerCreated');
-					self.off('onPlayerReady');
+                    self.off('onPlayerEnd');
+                    self.off('onPlayerPlaying');
+                    self.off('onPlayerPaused');
+                    self.off('onPlayerBuffering');
+                    self.off('onPlayerCued');
+                    self.off('onPlayerStateChange');
+                    self.off('onPlayerProgress');
+                    self.off('onPlayerCreated');
+                    self.off('onPlayerReady');
                 }
             });
         }
@@ -176,9 +176,9 @@
     $.YTiFrame.defaults = {
         video_id: '',
         player_vars: {
-			wmode: 'opaque', 
-			autoplay: 0, 
-			controls: 1 
+            wmode: 'opaque', 
+            autoplay: 0, 
+            controls: 1 
 		},
         progress_interval: 100,
         info_request: false,
