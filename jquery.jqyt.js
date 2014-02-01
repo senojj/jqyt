@@ -43,7 +43,7 @@
                 o                   = $.extend(true, {}, opts),
                 p                   = null,
                 value               = null,
-                loop_interval       = null
+                loop_interval       = null,
                 obj                 = null,
                 player              = null;
 
