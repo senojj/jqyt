@@ -15,16 +15,16 @@
                     self.data('yti-player').destroy();
                     self.data('yti-player', null);
                     $('#' + self.data('yti-player-id')).remove();
-                    self.data('yti-player-id', null);
-                    self.off('onPlayerEnd');
-                    self.off('onPlayerPlaying');
-                    self.off('onPlayerPaused');
-                    self.off('onPlayerBuffering');
-                    self.off('onPlayerCued');
-                    self.off('onPlayerStateChange');
-                    self.off('onPlayerProgress');
-                    self.off('onPlayerCreated');
-                    self.off('onPlayerReady');
+                    self.data('yti-player-id', null)
+						.off('onPlayerEnd')
+						.off('onPlayerPlaying')
+						.off('onPlayerPaused')
+						.off('onPlayerBuffering')
+						.off('onPlayerCued')
+						.off('onPlayerStateChange')
+						.off('onPlayerProgress')
+						.off('onPlayerCreated')
+						.off('onPlayerReady');
                 }
             });
         }
@@ -39,7 +39,6 @@
 
         return this.filter('div').each(function () {
             var self                = $(this),
-                context             = this,
                 o                   = $.extend(true, {}, opts),
                 p                   = null,
                 value               = null,
@@ -68,64 +67,64 @@
             obj = $('<div />').attr('id', 'yti-video-' + player_ctr).appendTo(self);
             player_ctr++;
             
-            self.on('onPlayerEnd', o.events.onPlayerEnd);
-            self.on('onPlayerPlaying', o.events.onPlayerPlaying);
-            self.on('onPlayerPaused', o.events.onPlayerPaused);
-            self.on('onPlayerBuffering', o.events.onPlayerBuffering);
-            self.on('onPlayerCued', o.events.onPlayerCued);
-            self.on('onPlayerStateChange', o.events.onPlayerStateChange);
-            self.on('onPlayerProgress', o.events.onPlayerProgress);
-            self.on('onPlayerCreated', o.events.onPlayerCreated);
-            self.on('onPlayerReady', o.events.onPlayerReady);
+            self.on('onPlayerEnd', o.events.onPlayerEnd)
+				.on('onPlayerPlaying', o.events.onPlayerPlaying)
+				.on('onPlayerPaused', o.events.onPlayerPaused)
+				.on('onPlayerBuffering', o.events.onPlayerBuffering)
+				.on('onPlayerCued', o.events.onPlayerCued)
+				.on('onPlayerStateChange', o.events.onPlayerStateChange)
+				.on('onPlayerProgress', o.events.onPlayerProgress)
+				.on('onPlayerCreated', o.events.onPlayerCreated)
+				.on('onPlayerReady', o.events.onPlayerReady);
 
-            self.data('yti-player-id', obj.attr('id'));
+			self.data('yti-player-id', obj.attr('id'));
 
-            self.on('onPlayerStateChange', function (e, state) {
-                var states = {};
-                states[YT.PlayerState.ENDED] = function() {
+			self.on('onPlayerStateChange', function (e, state) {
+				var states = {};
+				states[YT.PlayerState.ENDED] = function() {
 
-                    if (loop_interval !== null) {
-                        clearInterval(loop_interval);
-                    }
-                    self.trigger('onPlayerEnd', [state.target]);
-                    
-                };
-                states[YT.PlayerState.PLAYING] = function() {
+					if (loop_interval !== null) {
+						clearInterval(loop_interval);
+					}
+					self.trigger('onPlayerEnd', [state.target]);
+					
+				};
+				states[YT.PlayerState.PLAYING] = function() {
 
-                    if (loop_interval !== null) {
-                        clearInterval(loop_interval);
-                    }
-                    loop_interval = setInterval(function() {
-                        self.trigger('onPlayerProgress', [state.target]);
-                    }, o.progress_interval);
-                    self.trigger('onPlayerPlaying', [state.target]);
-                };
-                states[YT.PlayerState.PAUSED] = function() {
+					if (loop_interval !== null) {
+						clearInterval(loop_interval);
+					}
+					loop_interval = setInterval(function() {
+						self.trigger('onPlayerProgress', [state.target]);
+					}, o.progress_interval);
+					self.trigger('onPlayerPlaying', [state.target]);
+				};
+				states[YT.PlayerState.PAUSED] = function() {
 
-                    if (loop_interval !== null) {
-                        clearInterval(loop_interval);
-                    }
-                    self.trigger('onPlayerPaused', [state.target]);
-                };
-                states[YT.PlayerState.BUFFERING] = function() {
+					if (loop_interval !== null) {
+						clearInterval(loop_interval);
+					}
+					self.trigger('onPlayerPaused', [state.target]);
+				};
+				states[YT.PlayerState.BUFFERING] = function() {
 
-                    if (loop_interval !== null) {
-                        clearInterval(loop_interval);
-                    }
-                    self.trigger('onPlayerBuffering', [state.target]);
-                };
-                states[YT.PlayerState.CUED] = function() {
+					if (loop_interval !== null) {
+						clearInterval(loop_interval);
+					}
+					self.trigger('onPlayerBuffering', [state.target]);
+				};
+				states[YT.PlayerState.CUED] = function() {
 
-                    if (loop_interval !== null) {
-                        clearInterval(loop_interval);
-                    }
-                    self.trigger('onPlayerCued', [state.target]);
-                };
+					if (loop_interval !== null) {
+						clearInterval(loop_interval);
+					}
+					self.trigger('onPlayerCued', [state.target]);
+				};
 
-                if (states[state.data]) {
-                    states[state.data]();
-                }
-            });
+				if (states[state.data]) {
+					states[state.data]();
+				}
+			});
             
             player = new YT.Player(obj.attr('id'), {
                 height: self.height(),
