@@ -1,6 +1,6 @@
 /* jquery.jqyt - v1.0 - 2014-01-31
  * https://github.com/joshua-jones-software/jqyt
- * Copyright (c) 2014 Joshua Jones; Licensed MIT 
+ * Copyright (c) 2014 Joshua Jones; Licensed MIT
  */
 ;(function($) {
     $.fn.YTiFrame = function(options) {
@@ -16,15 +16,15 @@
                     self.data('yti-player', null);
                     $('#' + self.data('yti-player-id')).remove();
                     self.data('yti-player-id', null)
-						.off('onPlayerEnd')
-						.off('onPlayerPlaying')
-						.off('onPlayerPaused')
-						.off('onPlayerBuffering')
-						.off('onPlayerCued')
-						.off('onPlayerStateChange')
-						.off('onPlayerProgress')
-						.off('onPlayerCreated')
-						.off('onPlayerReady');
+                        .off('onPlayerEnd')
+                        .off('onPlayerPlaying')
+                        .off('onPlayerPaused')
+                        .off('onPlayerBuffering')
+                        .off('onPlayerCued')
+                        .off('onPlayerStateChange')
+                        .off('onPlayerProgress')
+                        .off('onPlayerCreated')
+                        .off('onPlayerReady');
                 }
             });
         }
@@ -47,10 +47,10 @@
                 player              = null;
 
             for (p in o) {
-            
+
                 if (typeof o[p] !== 'function' && self.data('yti-options-' + p) !== undefined) {
                     value = self.data('yti-options-' + p);
-                    
+
                     if (typeof o[p] !== 'object') {
                         o[p] = value;
                     }
@@ -59,73 +59,73 @@
                     }
                 }
             }
-            
+
             while ($('#yti-video-' + player_ctr).length) {
                 player_ctr++;
             }
-            
+
             obj = $('<div />').attr('id', 'yti-video-' + player_ctr).appendTo(self);
             player_ctr++;
-            
+
             self.on('onPlayerEnd', o.events.onPlayerEnd)
-				.on('onPlayerPlaying', o.events.onPlayerPlaying)
-				.on('onPlayerPaused', o.events.onPlayerPaused)
-				.on('onPlayerBuffering', o.events.onPlayerBuffering)
-				.on('onPlayerCued', o.events.onPlayerCued)
-				.on('onPlayerStateChange', o.events.onPlayerStateChange)
-				.on('onPlayerProgress', o.events.onPlayerProgress)
-				.on('onPlayerCreated', o.events.onPlayerCreated)
-				.on('onPlayerReady', o.events.onPlayerReady);
+                .on('onPlayerPlaying', o.events.onPlayerPlaying)
+                .on('onPlayerPaused', o.events.onPlayerPaused)
+                .on('onPlayerBuffering', o.events.onPlayerBuffering)
+                .on('onPlayerCued', o.events.onPlayerCued)
+                .on('onPlayerStateChange', o.events.onPlayerStateChange)
+                .on('onPlayerProgress', o.events.onPlayerProgress)
+                .on('onPlayerCreated', o.events.onPlayerCreated)
+                .on('onPlayerReady', o.events.onPlayerReady);
 
-			self.data('yti-player-id', obj.attr('id'));
+            self.data('yti-player-id', obj.attr('id'));
 
-			self.on('onPlayerStateChange', function (e, state) {
-				var states = {};
-				states[YT.PlayerState.ENDED] = function() {
+            self.on('onPlayerStateChange', function (e, state) {
+                var states = {};
+                states[YT.PlayerState.ENDED] = function() {
 
-					if (loop_interval !== null) {
-						clearInterval(loop_interval);
-					}
-					self.trigger('onPlayerEnd', [state.target]);
-					
-				};
-				states[YT.PlayerState.PLAYING] = function() {
+                    if (loop_interval !== null) {
+                        clearInterval(loop_interval);
+                    }
+                    self.trigger('onPlayerEnd', [state.target]);
 
-					if (loop_interval !== null) {
-						clearInterval(loop_interval);
-					}
-					loop_interval = setInterval(function() {
-						self.trigger('onPlayerProgress', [state.target]);
-					}, o.progress_interval);
-					self.trigger('onPlayerPlaying', [state.target]);
-				};
-				states[YT.PlayerState.PAUSED] = function() {
+                };
+                states[YT.PlayerState.PLAYING] = function() {
 
-					if (loop_interval !== null) {
-						clearInterval(loop_interval);
-					}
-					self.trigger('onPlayerPaused', [state.target]);
-				};
-				states[YT.PlayerState.BUFFERING] = function() {
+                    if (loop_interval !== null) {
+                        clearInterval(loop_interval);
+                    }
+                    loop_interval = setInterval(function() {
+                        self.trigger('onPlayerProgress', [state.target]);
+                    }, o.progress_interval);
+                    self.trigger('onPlayerPlaying', [state.target]);
+                };
+                states[YT.PlayerState.PAUSED] = function() {
 
-					if (loop_interval !== null) {
-						clearInterval(loop_interval);
-					}
-					self.trigger('onPlayerBuffering', [state.target]);
-				};
-				states[YT.PlayerState.CUED] = function() {
+                    if (loop_interval !== null) {
+                        clearInterval(loop_interval);
+                    }
+                    self.trigger('onPlayerPaused', [state.target]);
+                };
+                states[YT.PlayerState.BUFFERING] = function() {
 
-					if (loop_interval !== null) {
-						clearInterval(loop_interval);
-					}
-					self.trigger('onPlayerCued', [state.target]);
-				};
+                    if (loop_interval !== null) {
+                        clearInterval(loop_interval);
+                    }
+                    self.trigger('onPlayerBuffering', [state.target]);
+                };
+                states[YT.PlayerState.CUED] = function() {
 
-				if (states[state.data]) {
-					states[state.data]();
-				}
-			});
-            
+                    if (loop_interval !== null) {
+                        clearInterval(loop_interval);
+                    }
+                    self.trigger('onPlayerCued', [state.target]);
+                };
+
+                if (states[state.data]) {
+                    states[state.data]();
+                }
+            });
+
             player = new YT.Player(obj.attr('id'), {
                 height: self.height(),
                 width: self.width(),
@@ -167,7 +167,7 @@
             }
         });
     };
-    
+
     $.YTiFrame = {};
 
     $.YTiFrame.ready = false;
@@ -175,9 +175,9 @@
     $.YTiFrame.defaults = {
         video_id: '',
         player_vars: {
-            wmode: 'opaque', 
-            autoplay: 0, 
-            controls: 1 
+            wmode: 'opaque',
+            autoplay: 0,
+            controls: 1
         },
         progress_interval: 100,
         info_request: false,
