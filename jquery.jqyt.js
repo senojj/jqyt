@@ -16,7 +16,7 @@
                     self.data('jqyt-player', null);
                     $('#' + self.data('jqyt-player-id')).remove();
                     self.data('jqyt-player-id', null)
-                        .off('jqyt_player_end')
+                        .off('jqyt_player_ended')
                         .off('jqyt_player_playing')
                         .off('jqyt_player_paused')
                         .off('jqyt_player_buffering')
@@ -67,7 +67,7 @@
             obj = $('<div />').attr('id', 'jqyt-video-' + player_ctr).appendTo(self);
             player_ctr++;
 
-            self.on('jqyt_player_end', o.events.jqyt_player_end)
+            self.on('jqyt_player_ended', o.events.jqyt_player_ended)
                 .on('jqyt_player_playing', o.events.jqyt_player_playing)
                 .on('jqyt_player_paused', o.events.jqyt_player_paused)
                 .on('jqyt_player_buffering', o.events.jqyt_player_buffering)
@@ -87,7 +87,7 @@
                     if (loop_interval !== null) {
                         clearInterval(loop_interval);
                     }
-                    self.trigger('jqyt_player_end', [state.target]);
+                    self.trigger('jqyt_player_ended', [state.target]);
 
                 };
                 states[YT.PlayerState.PLAYING] = function() {
@@ -187,7 +187,7 @@
             jqyt_player_created:        function() {},
             jqyt_player_ready:          function() {},
             jqyt_player_state_changed:  function() {},
-            jqyt_player_end:            function() {},
+            jqyt_player_ended:            function() {},
             jqyt_player_playing:        function() {},
             jqyt_player_paused:         function() {},
             jqyt_player_buffering:      function() {},
