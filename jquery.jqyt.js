@@ -12,10 +12,10 @@
                 var self = $(this);
 
                 if (options === 'destroy') {
-                    self.data('yti-player').destroy();
-                    self.data('yti-player', null);
-                    $('#' + self.data('yti-player-id')).remove();
-                    self.data('yti-player-id', null)
+                    self.data('jqyt-player').destroy();
+                    self.data('jqyt-player', null);
+                    $('#' + self.data('jqyt-player-id')).remove();
+                    self.data('jqyt-player-id', null)
                         .off('onPlayerEnd')
                         .off('onPlayerPlaying')
                         .off('onPlayerPaused')
@@ -48,8 +48,8 @@
 
             for (p in o) {
 
-                if (typeof o[p] !== 'function' && self.data('yti-options-' + p) !== undefined) {
-                    value = self.data('yti-options-' + p);
+                if (typeof o[p] !== 'function' && self.data('jqyt-options-' + p) !== undefined) {
+                    value = self.data('jqyt-options-' + p);
 
                     if (typeof o[p] !== 'object') {
                         o[p] = value;
@@ -60,11 +60,11 @@
                 }
             }
 
-            while ($('#yti-video-' + player_ctr).length) {
+            while ($('#jqyt-video-' + player_ctr).length) {
                 player_ctr++;
             }
 
-            obj = $('<div />').attr('id', 'yti-video-' + player_ctr).appendTo(self);
+            obj = $('<div />').attr('id', 'jqyt-video-' + player_ctr).appendTo(self);
             player_ctr++;
 
             self.on('onPlayerEnd', o.events.onPlayerEnd)
@@ -77,10 +77,11 @@
                 .on('onPlayerCreated', o.events.onPlayerCreated)
                 .on('onPlayerReady', o.events.onPlayerReady);
 
-            self.data('yti-player-id', obj.attr('id'));
+            self.data('jqyt-player-id', obj.attr('id'));
 
             self.on('onPlayerStateChange', function (e, state) {
                 var states = {};
+                console.log('state change');
                 states[YT.PlayerState.ENDED] = function() {
 
                     if (loop_interval !== null) {
@@ -97,6 +98,7 @@
                     loop_interval = setInterval(function() {
                         self.trigger('onPlayerProgress', [state.target]);
                     }, o.progress_interval);
+                    console.log('playing');
                     self.trigger('onPlayerPlaying', [state.target]);
                 };
                 states[YT.PlayerState.PAUSED] = function() {
@@ -125,7 +127,7 @@
                     states[state.data]();
                 }
             });
-
+            
             player = new YT.Player(obj.attr('id'), {
                 height: self.height(),
                 width: self.width(),
@@ -154,14 +156,14 @@
                     dataType: 'jsonp',
                     success: function(data) {
                         player.video = data.data;
-                        this.data('yti-player', player);
+                        this.data('jqyt-player', player);
                         this.find('iframe').css('visibility', 'visible');
                         self.trigger('onPlayerCreated', [player]);
                     }
                 });
             }
             else {
-                self.data('yti-player', player);
+                self.data('jqyt-player', player);
                 self.find('iframe').css('visibility', 'visible');
                 self.trigger('onPlayerCreated', [player]);
             }
