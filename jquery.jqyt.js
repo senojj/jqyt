@@ -81,7 +81,7 @@
 
             self.on('onPlayerStateChange', function (e, state) {
                 var states = {};
-                console.log('state change');
+                
                 states[YT.PlayerState.ENDED] = function() {
 
                     if (loop_interval !== null) {
@@ -98,7 +98,6 @@
                     loop_interval = setInterval(function() {
                         self.trigger('onPlayerProgress', [state.target]);
                     }, o.progress_interval);
-                    console.log('playing');
                     self.trigger('onPlayerPlaying', [state.target]);
                 };
                 states[YT.PlayerState.PAUSED] = function() {
