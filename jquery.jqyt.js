@@ -3,7 +3,7 @@
  * Copyright (c) 2014 Joshua Jones; Licensed MIT
  */
 ;(function($) {
-    $.fn.YTiFrame = function(options) {
+    $.fn.jqyt = function(options) {
         var opts        = null,
             player_ctr  = 0;
 
@@ -29,10 +29,10 @@
             });
         }
 
-        opts = $.extend(true, {}, $.YTiFrame.defaults, options);
+        opts = $.extend(true, {}, $.jqyt.defaults, options);
 
-        if (!$.YTiFrame.ready) {
-            $.YTiFrame.queue.push({ selector: $(this), o: opts });
+        if (!$.jqyt.ready) {
+            $.jqyt.queue.push({ selector: $(this), o: opts });
             opts.events.jqyt_player_not_ready.call(this);
             return this;
         }
@@ -169,11 +169,11 @@
         });
     };
 
-    $.YTiFrame = {};
+    $.jqyt = {};
 
-    $.YTiFrame.ready = false;
+    $.jqyt.ready = false;
 
-    $.YTiFrame.defaults = {
+    $.jqyt.defaults = {
         video_id: '',
         player_vars: {
             wmode:      'opaque',
@@ -197,7 +197,7 @@
         }
     };
 
-    $.YTiFrame.queue = [];
+    $.jqyt.queue = [];
 
     if (!window.YT) {
         var tag = document.createElement('script');
@@ -210,13 +210,13 @@
         var cached_function = window.onYouTubeIframeAPIReady;
         
         return function() {
-            $.YTiFrame.ready = true;
+            $.jqyt.ready = true;
             var i;
             
-            for (i = 0; i < $.YTiFrame.queue.length; i++) {
-                $.YTiFrame.queue[i].selector.YTiFrame($.YTiFrame.queue[i].o);
+            for (i = 0; i < $.jqyt.queue.length; i++) {
+                $.jqyt.queue[i].selector.jqyt($.jqyt.queue[i].o);
             }
-            $.YTiFrame.queue = [];
+            $.jqyt.queue = [];
             
             if (cached_function !== undefined) {
                 cached_function.apply(this, arguments);
