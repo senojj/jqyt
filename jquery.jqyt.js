@@ -2,225 +2,236 @@
  * https://github.com/joshua-jones-software/jqyt
  * Copyright (c) 2014 Joshua Jones; Licensed MIT
  */
-;(function($) {
-    $.fn.jqyt = function(options) {
-        var opts        = null,
-            player_ctr  = 0;
 
-        if (typeof options === 'string') {
-            return this.each(function() {
-                var self = $(this);
+;
+( function ( $ ) {
+    $.fn.jqyt = function ( options ) {
+        var opts = null,
+            playerCtr = 0;
 
-                if (options === 'destroy') {
-                    self.data('jqyt-player').destroy();
-                    self.data('jqyt-player', null);
-                    $('#' + self.data('jqyt-player-id')).remove();
-                    self.data('jqyt-player-id', null)
-                        .off('jqyt_player_ended')
-                        .off('jqyt_player_playing')
-                        .off('jqyt_player_paused')
-                        .off('jqyt_player_buffering')
-                        .off('jqyt_player_queued')
-                        .off('jqyt_player_state_changed')
-                        .off('jqyt_player_progress')
-                        .off('jqyt_player_created')
-                        .off('jqyt_player_ready');
+        if ( typeof options === 'string' ) {
+            return this.each( function () {
+                var self = $( this );
+
+                if ( options === 'destroy' ) {
+                    self.data( 'jqyt-player' ).destroy();
+                    self.data( 'jqyt-player', null );
+                    $( '#' + self.data( 'jqyt-player-id' ) ).remove();
+                    self.data( 'jqyt-player-id', null )
+                        .off( 'jqytPlayerEnded' )
+                        .off( 'jqytPlayerPlaying' )
+                        .off( 'jqytPlayerPaused' )
+                        .off( 'jqytPlayerBuffering' )
+                        .off( 'jqytPlayerQueued' )
+                        .off( 'jqytPlayerStateChanged' )
+                        .off( 'jqytPlayerProgress' )
+                        .off( 'jqytPlayerCreated' )
+                        .off( 'jqytPlayerReady' );
                 }
-            });
+            } );
         }
 
-        opts = $.extend(true, {}, $.jqyt.defaults, options);
+        opts = $.extend( true, { }, $.fn.jqyt.defaults, options );
 
-        if (!$.jqyt.ready) {
-            $.jqyt.queue.push({ selector: $(this), o: opts });
-            opts.events.jqyt_player_not_ready.call(this);
+        if ( !$.fn.jqyt.ready ) {
+            $.fn.jqyt.queue.push( { selector: $( this ), o: opts } );
+            opts.events.jqytPlayerNotReady.call( this );
             return this;
         }
 
-        return this.filter('div').each(function () {
-            var self                = $(this),
-                o                   = $.extend(true, {}, opts),
-                p                   = null,
-                value               = null,
-                loop_interval       = null,
-                obj                 = null,
-                player              = null;
+        return this.filter( 'div' ).each( function () {
+            var self = $( this ),
+                o = $.extend( true, { }, opts ),
+                p = null,
+                value = null,
+                loopInterval = null,
+                obj = null,
+                player = null;
 
-            for (p in o) {
+            for ( p in o ) {
 
-                if (typeof o[p] !== 'function' && self.data('jqyt-options-' + p) !== undefined) {
-                    value = self.data('jqyt-options-' + p);
+                if ( typeof o[p] !== 'function' && self.data( 'jqyt-options-' + p ) !== undefined ) {
+                    value = self.data( 'jqyt-options-' + p );
 
-                    if (typeof o[p] !== 'object') {
+                    if ( typeof o[p] !== 'object' ) {
                         o[p] = value;
                     }
                     else {
-                        o[p] = $.extend(true, {}, o[p], value);
+                        o[p] = $.extend( true, { }, o[p], value );
                     }
                 }
             }
 
-            while ($('#jqyt-video-' + player_ctr).length) {
-                player_ctr++;
+            while ( $( '#jqyt-video-' + playerCtr ).length ) {
+                playerCtr++;
             }
 
-            obj = $('<div />').attr('id', 'jqyt-video-' + player_ctr).appendTo(self);
-            player_ctr++;
+            obj = $( '<div />' ).attr( 'id', 'jqyt-video-' + playerCtr ).appendTo( self );
+            playerCtr++;
 
-            self.on('jqyt_player_ended', o.events.jqyt_player_ended)
-                .on('jqyt_player_playing', o.events.jqyt_player_playing)
-                .on('jqyt_player_paused', o.events.jqyt_player_paused)
-                .on('jqyt_player_buffering', o.events.jqyt_player_buffering)
-                .on('jqyt_player_queued', o.events.jqyt_player_queued)
-                .on('jqyt_player_state_changed', o.events.jqyt_player_state_changed)
-                .on('jqyt_player_progress', o.events.jqyt_player_progress)
-                .on('jqyt_player_created', o.events.jqyt_player_created)
-                .on('jqyt_player_ready', o.events.jqyt_player_ready);
+            self.on( 'jqytPlayerEnded', o.events.jqytPlayerEnded )
+                .on( 'jqytPlayerPlaying', o.events.jqytPlayerPlaying )
+                .on( 'jqytPlayerPaused', o.events.jqytPlayerPaused )
+                .on( 'jqytPlayerBuffering', o.events.jqytPlayerBuffering )
+                .on( 'jqytPlayerQueued', o.events.jqytPlayerQueued )
+                .on( 'jqytPlayerStateChanged', o.events.jqytPlayerStateChanged )
+                .on( 'jqytPlayerProgress', o.events.jqytPlayerProgress )
+                .on( 'jqytPlayerCreated', o.events.jqytPlayerCreated )
+                .on( 'jqytPlayerReady', o.events.jqytPlayerReady );
 
-            self.data('jqyt-player-id', obj.attr('id'));
+            self.data( 'jqyt-player-id', obj.attr( 'id' ) );
 
-            self.on('jqyt_player_state_changed', function (e, state) {
-                var states = {};
-                
-                states[YT.PlayerState.ENDED] = function() {
+            self.on( 'jqytPlayerStateChanged', function ( e, state ) {
+                var states = { };
 
-                    if (loop_interval !== null) {
-                        clearInterval(loop_interval);
+                states[YT.PlayerState.ENDED] = function () {
+
+                    if ( loopInterval !== null ) {
+                        clearInterval( loopInterval );
                     }
-                    self.trigger('jqyt_player_ended', [state.target]);
+                    self.trigger( 'jqytPlayerEnded', [state.target] );
 
                 };
-                states[YT.PlayerState.PLAYING] = function() {
+                states[YT.PlayerState.PLAYING] = function () {
 
-                    if (loop_interval !== null) {
-                        clearInterval(loop_interval);
+                    if ( loopInterval !== null ) {
+                        clearInterval( loopInterval );
                     }
-                    loop_interval = setInterval(function() {
-                        self.trigger('jqyt_player_progress', [state.target]);
-                    }, o.progress_interval);
-                    self.trigger('jqyt_player_playing', [state.target]);
+                    loopInterval = setInterval( function () {
+                        self.trigger( 'jqytPlayerProgress', [state.target] );
+                    }, o.progressInterval );
+                    self.trigger( 'jqytPlayerPlaying', [state.target] );
                 };
-                states[YT.PlayerState.PAUSED] = function() {
+                states[YT.PlayerState.PAUSED] = function () {
 
-                    if (loop_interval !== null) {
-                        clearInterval(loop_interval);
+                    if ( loopInterval !== null ) {
+                        clearInterval( loopInterval );
                     }
-                    self.trigger('jqyt_player_paused', [state.target]);
+                    self.trigger( 'jqytPlayerPaused', [state.target] );
                 };
-                states[YT.PlayerState.BUFFERING] = function() {
+                states[YT.PlayerState.BUFFERING] = function () {
 
-                    if (loop_interval !== null) {
-                        clearInterval(loop_interval);
+                    if ( loopInterval !== null ) {
+                        clearInterval( loopInterval );
                     }
-                    self.trigger('jqyt_player_buffering', [state.target]);
+                    self.trigger( 'jqytPlayerBuffering', [state.target] );
                 };
-                states[YT.PlayerState.CUED] = function() {
+                states[YT.PlayerState.CUED] = function () {
 
-                    if (loop_interval !== null) {
-                        clearInterval(loop_interval);
+                    if ( loopInterval !== null ) {
+                        clearInterval( loopInterval );
                     }
-                    self.trigger('jqyt_player_queued', [state.target]);
+                    self.trigger( 'jqytPlayerQueued', [state.target] );
                 };
 
-                if (states[state.data]) {
+                if ( states[state.data] ) {
                     states[state.data]();
                 }
-            });
-            
-            player = new YT.Player(obj.attr('id'), {
-                height:     self.height(),
-                width:      self.width(),
-                videoId:    o.video_id,
-                playerVars: o.player_vars,
+            } );
+
+            player = new YT.Player( obj.attr( 'id' ), {
+                height: self.height(),
+                width: self.width(),
+                videoId: o.videoId,
+                playerVars: o.playerVars,
                 events: {
-                    onReady: function(e) {
-                        self.trigger('jqyt_player_ready', [e.target]);
+                    onReady: function ( e ) {
+                        self.trigger( 'jqytPlayerReady', [e.target] );
                     },
-                    onStateChange: function(state) {
-                        self.trigger('jqyt_player_state_changed', [state]);
+                    onStateChange: function ( state ) {
+                        self.trigger( 'jqytPlayerStateChanged', [state] );
                     },
-                    onError: function(e) {
-                        self.trigger('jqyt_player_error', [e.target]);
+                    onError: function ( e ) {
+                        self.trigger( 'jqytPlayerError', [e.target] );
                     }
                 }
-            });
+            } );
 
-            self.find('iframe').css('visibility', 'hidden');
+            self.find( 'iframe' ).css( 'visibility', 'hidden' );
 
-            if (o.info_request) {
-                $.ajax({
-                    url:        'http://gdata.youtube.com/feeds/api/videos/' + o.video_id + '?v=2&alt=jsonc',
-                    context:    self,
-                    async:      false,
-                    dataType:   'jsonp',
-                    success: function(data) {
+            if ( o.infoRequest ) {
+                $.ajax( {
+                    url: 'http://gdata.youtube.com/feeds/api/videos/' + o.videoId + '?v=2&alt=jsonc',
+                    context: self,
+                    async: false,
+                    dataType: 'jsonp',
+                    success: function ( data ) {
                         player.video = data.data;
-                        this.data('jqyt-player', player);
-                        this.find('iframe').css('visibility', 'visible');
-                        self.trigger('jqyt_player_created', [player]);
+                        this.data( 'jqyt-player', player );
+                        this.find( 'iframe' ).css( 'visibility', 'visible' );
+                        self.trigger( 'jqytPlayerCreated', [player] );
                     }
-                });
+                } );
             }
             else {
-                self.data('jqyt-player', player);
-                self.find('iframe').css('visibility', 'visible');
-                self.trigger('jqyt_player_created', [player]);
+                self.data( 'jqyt-player', player );
+                self.find( 'iframe' ).css( 'visibility', 'visible' );
+                self.trigger( 'jqytPlayerCreated', [player] );
             }
-        });
+        } );
     };
 
-    $.jqyt = {};
+    $.fn.jqyt.ready = false;
 
-    $.jqyt.ready = false;
-
-    $.jqyt.defaults = {
-        video_id: '',
-        player_vars: {
-            wmode:      'opaque',
-            autoplay:   0,
-            controls:   1
+    $.fn.jqyt.defaults = {
+        videoId: '',
+        playerVars: {
+            wmode: 'opaque',
+            autoplay: 0,
+            controls: 1
         },
-        progress_interval: 100,
-        info_request: false,
+        progressInterval: 100,
+        infoRequest: false,
         events: {
-            jqyt_player_not_ready:      function() {},
-            jqyt_player_created:        function() {},
-            jqyt_player_ready:          function() {},
-            jqyt_player_state_changed:  function() {},
-            jqyt_player_ended:            function() {},
-            jqyt_player_playing:        function() {},
-            jqyt_player_paused:         function() {},
-            jqyt_player_buffering:      function() {},
-            jqyt_player_queued:         function() {},
-            jqyt_player_error:          function() {},
-            jqyt_player_progress:       function() {}
+            jqytPlayerNotReady: function () {
+            },
+            jqytPlayerCreated: function () {
+            },
+            jqytPlayerReady: function () {
+            },
+            jqytPlayerStateChanged: function () {
+            },
+            jqytPlayerEnded: function () {
+            },
+            jqytPlayerPlaying: function () {
+            },
+            jqytPlayerPaused: function () {
+            },
+            jqytPlayerBuffering: function () {
+            },
+            jqytPlayerQueued: function () {
+            },
+            jqytPlayerError: function () {
+            },
+            jqytPlayerProgress: function () {
+            }
         }
     };
 
-    $.jqyt.queue = [];
+    $.fn.jqyt.queue = [];
 
-    if (!window.YT) {
-        var tag = document.createElement('script');
+    if ( !window.YT ) {
+        var tag = document.createElement( 'script' );
         tag.src = "http://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var firstScriptTag = document.getElementsByTagName( 'script' )[0];
+        firstScriptTag.parentNode.insertBefore( tag, firstScriptTag );
     }
 
-    window.onYouTubeIframeAPIReady = (function() {
-        var cached_function = window.onYouTubeIframeAPIReady;
-        
-        return function() {
-            $.jqyt.ready = true;
+    window.onYouTubeIframeAPIReady = ( function () {
+        var cachedFunction = window.onYouTubeIframeAPIReady;
+
+        return function () {
+            $.fn.jqyt.ready = true;
             var i;
-            
-            for (i = 0; i < $.jqyt.queue.length; i++) {
-                $.jqyt.queue[i].selector.jqyt($.jqyt.queue[i].o);
+
+            for ( i = 0; i < $.fn.jqyt.queue.length; i++ ) {
+                $.fn.jqyt.queue[i].selector.jqyt( $.fn.jqyt.queue[i].o );
             }
-            $.jqyt.queue = [];
-            
-            if (cached_function !== undefined) {
-                cached_function.apply(this, arguments);
+            $.fn.jqyt.queue = [];
+
+            if ( cachedFunction !== undefined ) {
+                cachedFunction.apply( this, arguments );
             }
         };
-    }());
-}(jQuery));
+    }() );
+}( jQuery ) );

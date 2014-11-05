@@ -9,7 +9,7 @@
             // works with no conflict
             jQuery.noConflict();
         </script>
-        <script src="../jquery.jqyt.js"></script>
+        <script src="../dist/jquery.jqyt.min.js"></script>
         <script type="text/javascript">
             
             (function ($) {
@@ -23,9 +23,9 @@
                     */
                    
                    // create a video on all elements with matching selector.
-                    $('.yt-video').YTiFrame({
-                        video_id: 'Erd2k6EKxCQ', // video to play
-                        player_vars: { autoplay: 1 } // autoplay video
+                    $('.yt-video').jqyt({
+                        videoId: 'Erd2k6EKxCQ', // video to play
+                        playerVars: { autoplay: 1 } // autoplay video
                     });
                 });
             }(jQuery));
