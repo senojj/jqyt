@@ -1,4 +1,4 @@
-/* jquery.jqyt - v1.0 - 2014-01-31
+/* jquery.jqyt - v1.0.0 - 2014-11-06
  * https://github.com/joshua-jones-software/jqyt
  * Copyright (c) 2014 Joshua Jones; Licensed MIT
  */
