@@ -50,8 +50,8 @@
 
             for ( p in o ) {
 
-                if ( typeof o[p] !== 'function' && self.data( 'jqyt-options-' + p ) !== undefined ) {
-                    value = self.data( 'jqyt-options-' + p );
+                if ( typeof o[p] !== 'function' && self.data( 'jqyt-' + p.replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase() ) !== undefined ) {
+                    value = self.data( 'jqyt-' + p );
 
                     if ( typeof o[p] !== 'object' ) {
                         o[p] = value;

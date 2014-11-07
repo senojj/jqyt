@@ -9,52 +9,20 @@
             // works with no conflict
             jQuery.noConflict();
         </script>
-        <script src="../jquery.jqyt.js"></script>
+        <script src="../dist/jquery.jqyt.min.js"></script>
         <script type="text/javascript">
-            
-            (function ($) {
-                
-                $(document).ready(function () {
-                    
-                   /* 
-                    *  note: in this example, all elements that are members of
-                    *  the 'yti-video' class will show the same video due to
-                    *  parameters that are set.
-                    */
-                   
-                   // create a video on all elements with matching selector.
-                    $('.yt-video').YTiFrame({
-                        video_id: 'Erd2k6EKxCQ', // video to play if no video is assigned at the element tag level.
-                        player_vars: { autoplay: 1 } // autoplay video
-                    });
-                });
-            }(jQuery));
+
+            ( function ( $ ) {
+
+                $( document ).ready( function () {
+
+                    $( '.video' ).jqyt();
+                } );
+            }( jQuery ) );
         </script>
-        <style type="text/css">
-            
-            /*
-             *  note: the video will take on the width and height of the div it 
-             *  is assigned to.
-             */
-            .yt-video {
-                width:600px;
-                height:370px;
-            }
-        </style>
     </head>
     <body>
-        <!-- 
-            Using data attribute 'yti-options-*', player options can be specified per instance. This allows overriding
-            of options that were set in the initialization.
-        -->
-        
-        <!-- here the option 'video_id' is overriden to allow assignment of a different video. -->
-        <div class="yt-video" data-yti-options-video_id="WDDgoxvQsrQ"></div>
-        
-        <!-- here the option 'player_vars' is overriden to prevent autoplay. the 'video_id' option is also overridden. -->
-        <div class="yt-video" data-yti-options-video_id="seX7jYI96GE" data-yti-options-player_vars='{ "autoplay": 0 }'></div>
-        
-        <!-- here no options are overridden. -->
-        <div class="yt-video"></div>
+        <div class="video" data-jqyt-video-id="bHQqvYy5KYo" style="width:500px;height:300px;"></div>
+        <div class="video" data-jqyt-video-id="EgeMgjplANY" style="width:500px;height:300px;"></div>
     </body>
 </html>
