@@ -1,7 +1,7 @@
 jqyt
 ====
 
-jQuery wrapper for the YouTube iFrame API
+jQuery plug-in for the YouTube iFrame API
 
 ####Basic Example
 
