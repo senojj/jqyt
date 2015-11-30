@@ -1,0 +1,28 @@
+{
+  "name": "jqyt",
+  "version": "1.0.0",
+  "description": "A jQuery plug-in for easily working with YouTube videos",
+  "main": "jquery.jqyt.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0N3S3C/jqyt.git"
+  },
+  "keywords": [
+    "jquery-plugin",
+    "ecosystem:jquery",
+    "youtube",
+    "google"
+  ],
+  "author": "Joshua Jones",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/0N3S3C/jqyt/issues"
+  },
+  "homepage": "https://github.com/0N3S3C/jqyt#readme"
+}
