@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/0N3S3C/jqyt.git"
+    "url": "git+https://github.com/senojj/jqyt.git"
   },
   "keywords": [
     "jquery-plugin",
@@ -22,7 +22,7 @@
   "author": "Joshua Jones",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/0N3S3C/jqyt/issues"
+    "url": "https://github.com/senojj/jqyt/issues"
   },
-  "homepage": "https://github.com/0N3S3C/jqyt#readme"
+  "homepage": "https://github.com/senojj/jqyt#readme"
 }
