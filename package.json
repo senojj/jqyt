@@ -1,6 +1,6 @@
 {
   "name": "jqyt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A jQuery plug-in for easily working with YouTube videos",
   "main": "jquery.jqyt.js",
   "directories": {
